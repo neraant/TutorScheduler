@@ -7,11 +7,15 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . --fix",
+    "fromat": "prettier . --write",
     "prepare": "husky"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css,html}": [
       "prettier --write"
     ]
   },
