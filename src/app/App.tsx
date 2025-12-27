@@ -1,16 +1,7 @@
-import { Button } from '@/shared/ui/button'
-
-import { MainLayout } from '../shared/layouts/MainLayout'
-import { Providers } from './Providers'
+import { Providers } from './providers'
 
 function App() {
-  return (
-    <Providers>
-      <MainLayout>
-        <Button>Click me!</Button>
-      </MainLayout>
-    </Providers>
-  )
+  return <Providers />
 }
 
 export default App
