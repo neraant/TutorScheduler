@@ -1,5 +1,9 @@
-import type { ReactNode } from 'react'
+import { Outlet } from 'react-router'
 
-export const MainLayout = ({ children }: { children: ReactNode }) => {
-  return <div className="m-auto h-dvh w-dvw px-4">{children}</div>
+export const MainLayout = () => {
+  return (
+    <div className="m-auto h-dvh w-dvw px-4">
+      <Outlet />
+    </div>
+  )
 }

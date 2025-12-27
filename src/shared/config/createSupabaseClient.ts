@@ -8,3 +8,5 @@ const SUPABASE_PUBLISH_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
 export const createSupabaseClient = () => {
   return createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISH_KEY)
 }
+
+export const supabase = createSupabaseClient()
