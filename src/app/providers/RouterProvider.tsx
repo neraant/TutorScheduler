@@ -3,14 +3,19 @@ import { RouterProvider as ReactRouterProvider } from 'react-router/dom'
 
 import { UserRoles } from '@/entities/user'
 import { DashboardPage } from '@/pages/dashboard'
+import { ErrorPage } from '@/pages/error'
 import { LoginPage } from '@/pages/login'
 import { MyLessonsPage } from '@/pages/myLessons'
+import { NotFoundPage } from '@/pages/notFound'
 import { RegisterPage } from '@/pages/register'
 import { MainLayout } from '@/shared/layouts/MainLayout'
 
 import { ProtectedRoute } from '../components/ProtectedRoute'
 
 const router = createBrowserRouter([
+  // error
+  { errorElement: <ErrorPage /> },
+
   // general
   { path: '/login', element: <LoginPage /> },
   { path: '/register', element: <RegisterPage /> },
@@ -18,6 +23,12 @@ const router = createBrowserRouter([
   {
     element: <MainLayout />,
     children: [
+      // base route
+      {
+        path: '/',
+        element: <ProtectedRoute />,
+      },
+
       // tutor
       {
         element: <ProtectedRoute allowedRoles={[UserRoles.TUTOR]} />,
@@ -30,6 +41,12 @@ const router = createBrowserRouter([
         children: [{ path: '/student/lessons', element: <MyLessonsPage /> }],
       },
     ],
+  },
+
+  // not found
+  {
+    path: '*',
+    element: <NotFoundPage />,
   },
 ])
 
