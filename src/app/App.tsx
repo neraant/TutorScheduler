@@ -1,24 +1,15 @@
-import { useEffect } from 'react'
-
-import { createSupabaseClient } from '@/shared/config/createSupabaseClient'
 import { Button } from '@/shared/ui/button'
 
 import { MainLayout } from '../shared/layouts/MainLayout'
+import { Providers } from './Providers'
 
 function App() {
-  useEffect(() => {
-    const getLessons = async () => {
-      const supa = await createSupabaseClient()
-      console.log(supa)
-    }
-
-    getLessons()
-  }, [])
-
   return (
-    <MainLayout>
-      <Button>Click me!</Button>
-    </MainLayout>
+    <Providers>
+      <MainLayout>
+        <Button>Click me!</Button>
+      </MainLayout>
+    </Providers>
   )
 }
 
