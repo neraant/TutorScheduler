@@ -7,7 +7,7 @@ import { ROUTES } from '../constants/routes';
 
 export const AuthLayout = () => {
   return (
-    <div className="flex h-full w-full">
+    <div className="flex h-full w-full flex-1">
       <div className="to-primary flex flex-1 flex-col items-center justify-center bg-linear-to-br from-blue-400 p-2">
         <div className="mt-8 ml-8 flex items-center gap-2 self-start">
           <div className="flex items-center justify-center rounded-md bg-white/30 p-2">
