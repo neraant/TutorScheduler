@@ -7,6 +7,13 @@
   box-sizing: border-box;
 }
 
+body,
+#root {
+  width: 100dvw;
+  height: 100dvh;
+  font-family: 'Inter', sans-serif;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
