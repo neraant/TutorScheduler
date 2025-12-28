@@ -11,6 +11,7 @@ import { RegisterPage } from '@/pages/register';
 import { MainLayout } from '@/shared/layouts/MainLayout';
 
 import { ProtectedRoute } from '../components/ProtectedRoute';
+import { PublicRoute } from '../components/PublicRoute';
 import { ROUTES } from '../constants/routes';
 import { AuthLayout } from '../layouts/AuthLayout';
 
@@ -20,10 +21,15 @@ const router = createBrowserRouter([
 
   // general
   {
-    element: <AuthLayout />,
+    element: <PublicRoute />,
     children: [
-      { path: '/login', element: <LoginPage /> },
-      { path: '/register', element: <RegisterPage /> },
+      {
+        element: <AuthLayout />,
+        children: [
+          { path: '/login', element: <LoginPage /> },
+          { path: '/register', element: <RegisterPage /> },
+        ],
+      },
     ],
   },
 
@@ -32,8 +38,13 @@ const router = createBrowserRouter([
     children: [
       // base route
       {
-        path: ROUTES.MAIN,
-        element: <ProtectedRoute />,
+        element: <PublicRoute />,
+        children: [
+          {
+            path: ROUTES.MAIN,
+            element: <ProtectedRoute />,
+          },
+        ],
       },
 
       // tutor

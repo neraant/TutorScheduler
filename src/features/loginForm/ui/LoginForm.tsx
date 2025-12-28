@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Eye, EyeClosed, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
 import { ROUTES } from '@/app/constants/routes';
@@ -16,10 +16,14 @@ import { SUCCESS_SIGN_IN_MESSAGE } from '../constants';
 import { type LoginFormData, loginSchema } from '../model/shemas';
 
 export const LoginForm = () => {
+  const navigate = useNavigate();
   const [isPassword, setIsPassword] = useState(true);
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data: LoginFormData) => signInWithEmailAndPassword(data),
+    mutationFn: async (data: LoginFormData) => {
+      await signInWithEmailAndPassword(data);
+      navigate(ROUTES.MAIN, { replace: true });
+    },
     onSuccess: () => {
       toast.success(SUCCESS_SIGN_IN_MESSAGE);
     },
@@ -46,8 +50,10 @@ export const LoginForm = () => {
         onSubmit={handleSubmit((data) => mutateAsync(data))}
         className="flex w-full flex-col items-center gap-4"
       >
-        <div className="grid w-full items-center gap-3">
-          <Label htmlFor="email">Email</Label>
+        <div className="grid w-full items-center">
+          <Label htmlFor="email" className="mb-3">
+            Email
+          </Label>
           <Input
             {...register('email')}
             id="email"
@@ -55,7 +61,7 @@ export const LoginForm = () => {
             className={errors.email ? 'border-error' : ''}
           />
           {errors.email && (
-            <p className="text-error text-sm">{errors.email.message}</p>
+            <p className="text-error mt-1 text-sm">{errors.email.message}</p>
           )}
         </div>
 
@@ -96,7 +102,7 @@ export const LoginForm = () => {
         </div>
 
         <Button
-          className="flex w-full items-center gap-2"
+          className="mt-3 flex w-full items-center gap-2"
           type="submit"
           disabled={isPending}
         >
