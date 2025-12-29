@@ -9,6 +9,7 @@ import { ROUTES } from '@/app/constants/routes';
 import { UserRoles } from '@/entities/user';
 import { RoleCard } from '@/shared/components/roleCard';
 import { useYupValidationResolver } from '@/shared/hooks/useYupValidationResolver';
+import { getErrorMessage } from '@/shared/lib/getErrorMessage';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { Label } from '@/shared/ui/label';
@@ -32,7 +33,9 @@ export const RegisterForm = () => {
     onSuccess: () => {
       toast.success(SUCCESS_SIGN_UP_MESSAGE);
     },
-    onError: (error) => toast.error(error.message),
+    onError: (error) => {
+      toast.error(getErrorMessage(error));
+    },
   });
 
   const resolver = useYupValidationResolver(registerSchema);
@@ -53,7 +56,7 @@ export const RegisterForm = () => {
   const toggleRole = (newRole: UserRoles) => setSelectedRole(newRole);
 
   return (
-    <div className="flex w-full max-w-125 flex-col gap-10">
+    <>
       <div className="mr-auto flex flex-col gap-2">
         <h2 className="text-4xl font-bold text-gray-900">
           Create your account
@@ -132,7 +135,7 @@ export const RegisterForm = () => {
               variant="link"
               type="button"
               onClick={() => togglePasswordVisibillity('password')}
-              className="absolute right-0 pt-5"
+              className="absolute right-0 pt-5.5"
             >
               {isPassword ? <Eye color="gray" /> : <EyeClosed color="gray" />}
             </Button>
@@ -161,7 +164,7 @@ export const RegisterForm = () => {
               variant="link"
               type="button"
               onClick={() => togglePasswordVisibillity('confirmPassword')}
-              className="absolute right-0 pt-5"
+              className="absolute right-0 pt-5.5"
             >
               {isConfirmPassword ? (
                 <Eye color="gray" />
@@ -187,6 +190,6 @@ export const RegisterForm = () => {
           {isPending && <Loader2 className="animate-spin" />}
         </Button>
       </form>
-    </div>
+    </>
   );
 };

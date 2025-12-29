@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 
 import { ROUTES } from '@/app/constants/routes';
 import { useYupValidationResolver } from '@/shared/hooks/useYupValidationResolver';
+import { getErrorMessage } from '@/shared/lib/getErrorMessage';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { Label } from '@/shared/ui/label';
@@ -27,7 +28,9 @@ export const LoginForm = () => {
     onSuccess: () => {
       toast.success(SUCCESS_SIGN_IN_MESSAGE);
     },
-    onError: (error) => toast.error(error.message),
+    onError: (error) => {
+      toast.error(getErrorMessage(error));
+    },
   });
 
   const resolver = useYupValidationResolver(loginSchema);
@@ -40,7 +43,7 @@ export const LoginForm = () => {
   const togglePasswordVisibillity = () => setIsPassword((prev) => !prev);
 
   return (
-    <div className="flex w-full max-w-125 flex-col gap-10">
+    <>
       <div className="mr-auto flex flex-col gap-2">
         <h2 className="text-4xl font-bold text-gray-900">Welcome back</h2>
         <p className="text-gray-900/50">Sign in to your account</p>
@@ -83,9 +86,9 @@ export const LoginForm = () => {
               variant="link"
               type="button"
               onClick={togglePasswordVisibillity}
-              className="absolute right-0 pt-5"
+              className="absolute right-0 pt-5.5"
             >
-              {isPassword ? <Eye /> : <EyeClosed />}
+              {isPassword ? <Eye color="gray" /> : <EyeClosed color="gray" />}
             </Button>
           </div>
 
@@ -110,6 +113,6 @@ export const LoginForm = () => {
           {isPending && <Loader2 className="animate-spin" />}
         </Button>
       </form>
-    </div>
+    </>
   );
 };
