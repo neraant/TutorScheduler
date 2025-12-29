@@ -1,23 +1,18 @@
-import { Clock } from 'lucide-react';
-import { NavLink, Outlet } from 'react-router';
+import { NavLink, Outlet, useLocation } from 'react-router';
 
+import { Logo } from '@/shared/components/logo';
 import { cn } from '@/shared/lib/utils';
 
 import { ROUTES } from '../constants/routes';
 
 export const AuthLayout = () => {
+  const { pathname } = useLocation();
+  const isLogin = pathname === ROUTES.LOGIN;
+
   return (
     <div className="flex h-full w-full flex-1">
-      <div className="to-primary flex flex-1 flex-col items-center justify-center bg-linear-to-br from-blue-400 p-2">
-        <div className="mt-8 ml-8 flex items-center gap-2 self-start">
-          <div className="flex items-center justify-center rounded-md bg-white/30 p-2">
-            <Clock color="white" />
-          </div>
-
-          <h2 className="text-center text-xl leading-normal font-bold text-white">
-            TutorSchedule
-          </h2>
-        </div>
+      <div className="to-primary hidden flex-1 flex-col items-center justify-center bg-linear-to-br from-blue-400 p-2 lg:flex">
+        <Logo />
 
         <div className="mt-auto mb-8 ml-8 flex flex-col gap-2 self-start">
           <p className="max-w-95 text-3xl font-bold text-white">
@@ -31,8 +26,15 @@ export const AuthLayout = () => {
         </div>
       </div>
 
-      <div className="flex w-full flex-1/8 flex-col items-center justify-center">
-        <div className="mb-8 flex w-full max-w-125">
+      <Logo
+        containerClassName="flex lg:hidden absolute m-0 top-4 sm:left-4 sm:translate-x-0 left-[50%] translate-x-[-50%]"
+        iconClassName="text-primary"
+        iconContainerClassName="bg-primary/10"
+        textClassName="text-primary"
+      />
+
+      <div className="mt-18 flex w-full flex-1/8 flex-col items-center md:justify-center lg:mt-0">
+        <div className="mb-8 flex w-full max-w-130 p-4">
           <NavLink
             to={ROUTES.LOGIN}
             className={({ isActive }) =>
@@ -61,7 +63,15 @@ export const AuthLayout = () => {
           </NavLink>
         </div>
 
-        <Outlet />
+        <div
+          key={pathname}
+          className={cn(
+            'flex w-full max-w-130 flex-col gap-10 p-4',
+            isLogin ? 'animate-slide-left' : 'animate-slide-right'
+          )}
+        >
+          <Outlet />
+        </div>
       </div>
     </div>
   );

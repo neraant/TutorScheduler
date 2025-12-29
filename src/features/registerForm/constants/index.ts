@@ -1,1 +1,1 @@
-export const SUCCESS_SIGN_UP_MESSAGE = 'Sign up successfully!';
+export const SUCCESS_SIGN_UP_MESSAGE = `Sign up successfully! Confirm your email.`;
